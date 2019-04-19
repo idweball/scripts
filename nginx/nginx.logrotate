@@ -1,0 +1,12 @@
+/data/logs/wwwlog/*-nginx.log {
+    daliy
+    rotate 15
+    compress
+    nodelaycompress
+    ifempty
+    dateext
+    missingok
+    postrotate
+        [ -e /usr/local/nginx/sbin/nginx ] && /usr/local/nginx/sbin/nginx -s reload &>/dev/null
+    endscript
+}
