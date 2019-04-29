@@ -24,8 +24,8 @@ if [ $? -ne 0 ];then
     exit 1
 fi
 
-sed -i 's@^Server=.*@Server="${ZBX_SERVER}"@' /etc/zabbix/zabbix_agentd.conf
-sed -i 's@^ServerActive=.*@ServerActive="${ZBX_SERVER}"@' /etc/zabbix/zabbix_agentd.conf
+sed -i "s@^Server=.*@Server=`echo ${ZBX_SERVER}`@" /etc/zabbix/zabbix_agentd.conf
+sed -i "s@^ServerActive=.*@ServerActive=`echo ${ZBX_SERVER}`@" /etc/zabbix/zabbix_agentd.conf
 
 systemctl restart zabbix-agent && systemctl enable zabbix-agent 
 if [ $? -ne 0 ];then
