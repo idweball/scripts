@@ -46,24 +46,21 @@ function install() {
     fi
 }
 
-function main() {
-    case $1 in
-        'start')
-            start
-            ;;
-        'stop')
-            stop
-            ;;
-        'install')
-            install && start
-            ;;
-        '-h|--help')
-            echo 'Usage: $0 {start|stop|install|-h|--help}'
-            ;;
-        *)
-            install && start
-            ;;
-    esac
-}
 
-main $1
+case $1 in
+start)
+    start
+    ;;
+stop)
+    stop
+    ;;
+install)
+    install && start
+    ;;
+-h|--help)
+    echo 'Usage: $0 {start|stop|install|-h|--help}'
+    ;;
+*)
+    install && start
+    ;;
+esac
