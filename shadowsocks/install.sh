@@ -7,25 +7,6 @@ PASSWORD='p@ssw0rd'          # 密码
 PORT='12345'                 # 监听端口
 
 
-function install() {
-    if [ $UID -ne 0 ];then
-        echo "error: the script must be run with root." 1>&2
-        exit 1
-    fi
-
-    yum install -y epel-release &&  yum install -y python2-pip
-    if [ $? -ne 0 ];then
-        echo "error: faild to install dependices" 1>&2
-        exit 1
-    fi
-
-    pip install shadowsocks
-    if [ $? -ne 0 ];then
-        echo "error: failed to install shadowsocks" 1>&2
-        exit 1
-    fi
-}
-
 
 function start() {
     ssserver -s 0.0.0.0 -p $PORT -m $METHOD -k $PASSWORD -d start
@@ -46,6 +27,24 @@ function stop() {
     echo "stopped ok."
 }
 
+function install() {
+    if [ $UID -ne 0 ];then
+        echo "error: the script must be run with root." 1>&2
+        exit 1
+    fi
+
+    yum install -y epel-release &&  yum install -y python2-pip
+    if [ $? -ne 0 ];then
+        echo "error: faild to install dependices" 1>&2
+        exit 1
+    fi
+
+    pip install shadowsocks
+    if [ $? -ne 0 ];then
+        echo "error: failed to install shadowsocks" 1>&2
+        exit 1
+    fi
+}
 
 function main() {
     case $1 in
@@ -56,7 +55,7 @@ function main() {
             stop
             ;;
         'install')
-            install
+            install && start
             ;;
         '-h|--help')
             echo 'Usage: $0 {start|stop|install|-h|--help}'
