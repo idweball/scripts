@@ -61,7 +61,7 @@ function main() {
             echo 'Usage: $0 {start|stop|install|-h|--help}'
             ;;
         *)
-            install
+            install && start
             ;;
     esac
 }
